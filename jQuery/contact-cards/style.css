@@ -1,0 +1,35 @@
+#wrapper {
+    width: 970px;
+    margin: 0 auto;
+    font-family: Arial;
+    font-size: 1.3em;
+}
+
+#contact-form, #contact-cards {
+    display: inline-block;
+    vertical-align: top;
+    width: 430px;
+}
+
+#contact-form p {
+    margin: 5px auto;
+}
+
+textarea {
+    vertical-align: top;
+    margin: 3px auto;
+    width: 200px;
+    height: 120px;
+}
+
+.card-side {
+    border: 3px solid black;
+    border-radius: 5px;
+    height: 200px;
+    width: 400px;
+    margin: 10px;
+}
+
+.card h1, h2, p{
+    text-align: center;
+}

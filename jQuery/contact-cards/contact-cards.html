@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Cards</title>
+    <meta description="A basic contact card app using dynamic jQuery to add new cards and flip without refreshing the page">
+    <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+    <script type="text/javascript">
+        $(document).on('click', 'button', function() {
+            var fullName = $('.firstname').val()+' '+$('.lastname').val();
+            var description = $('.description').val();
+            $('#contact-cards').append("<div class='card'><div class='card-side'><h1>"+fullName+"</h1><h2>Click for description!</h2></div><div class='card-side hide'><p>"+description+"</p></div></div>");
+            $('.hide').hide();
+        });
+        $(document).on('click', '.card', function() {
+            $(this).children().toggleClass('hide');
+            $(this).children().toggle();
+        });
+    </script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id='wrapper'>
+        <div id='contact-form'>
+            <form id='new-contact'>
+                <p>First name: <input type="text" class="firstname" value="First Name"></p>
+                <p>Last name: <input type="text" class="lastname" value="Last Name"></p>
+            </form>
+            <p>Description: <textarea class="description">Enter a description here</textarea></p>
+            <button type="button">Add User</button>
+        </div>
+        <div id='contact-cards'>
+        </div>
+    </div>
+</body>
+</html>
