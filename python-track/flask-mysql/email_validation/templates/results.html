@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Emails</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <h3>{{ message }}</h3>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h4>Previous emails:</h4>
+    <form action='/delete' method='post'>
+    {% if previous %}
+        {% for user in previous %}
+            <p>{{user['email']}} created at {{user['created_at'].ctime()}} <input type='hidden' name='id' value={{user['id']}}><input type="submit" value="delete email"></p>
+        {% endfor %}
+    {% endif %}
+    </form>
+</body>
+</html>
