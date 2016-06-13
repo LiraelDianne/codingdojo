@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submitted Info</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+    <div id="wrapper">
+        <h2>Submitted Info</h2>
+        <div class="column">
+            <p>Name:</p>
+            <p>Dojo Location:</p>
+            <p>Favorite Language:</p>
+            <p>Comment:</p>
+        </div>
+        <div class="column">
+            <p>{{ session["name"] }}</p>
+            <p>{{ session["location"] }}</p>
+            <p>{{ session["language"] }}</p>
+            <p>{{ session["comment"] }}</p>
+        </div>
+        <form action="/">
+            <button type="submit">Go Back</button>
+        </form>
+    </div>
+</body>
+</html>

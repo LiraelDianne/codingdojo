@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dojo Survey</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+    <div id="wrapper">
+        <form action="/process" method='POST'>
+            <div>
+                <p>Your Name: </p>
+                <input type="text" name="name">
+            </div>
+            <div>
+                <p>Dojo Location: </p>
+                <select name="location">
+                    <option value="Seattle">Seattle</option>
+                    <option value="San Jose">San Jose</option>
+                    <option value="Chicago">Chicago</option>
+                    <option value="Washington DC">Washington DC</option>
+                    <option value="Dallas">Dallas</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                </select>
+            </div>
+            <div>
+                <p>Language: </p>
+                <select name="language">
+                    <option value="Python">Python</option>
+                    <option value="Javascript">Javascript</option>
+                    <option value="Ruby">Ruby</option>
+                    <option value="Swift">Swift</option>
+                    <option value="PHP">PHP</option>
+                </select>
+            </div>
+            <p>Comment (optional):</p>
+            <textarea name="comment"></textarea>
+            <input type="submit" value="Button">
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

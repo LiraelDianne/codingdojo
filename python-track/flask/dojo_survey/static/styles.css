@@ -1,0 +1,21 @@
+#wrapper {
+    width: 410px;
+    margin: 0 auto;
+
+}
+
+.column {
+    display: inline-block;
+    width: 200px;
+}
+
+form p {
+    display: inline-block;
+    width: 150px;
+    margin: 5px;
+}
+
+textarea {
+    height: 100px;
+    width: 350px;
+}
