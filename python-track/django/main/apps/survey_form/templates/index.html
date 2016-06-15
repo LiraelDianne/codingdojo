@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+</head>
+<body>
+    <form action='/surveys/process' method='POST'>
+        {% csrf_token %}
+        <p>Your Name:</p>
+        <input type="text" name="name">
+        <p>Dojo Location:</p>
+        <select name="dojo">
+            <option>Seattle</option>
+            <option>Bay Area</option>
+            <option>Los Angeles</option>
+            <option>Chicago</option>
+            <option>D. C.</option>
+            <option>Dalles</option>
+        </select>
+        <p>Favorite Language:</p>
+        <select name="language">
+            <option>Python</option>
+            <option>Ruby</option>
+            <option>Javascript</option>
+            <option>Swift</option>
+            <option>C</option>
+            <option>Perl</option>
+        </select>
+        <p>Comment (optional):</p>
+        <textarea name="comment"></textarea>
+        <input type="hidden" value={{ request.session.count }}>
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>
