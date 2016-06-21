@@ -1,0 +1,20 @@
+#wrapper {
+    width: 600px;
+    margin: 0 auto;
+}
+
+form p {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+    margin: 3px;
+}
+
+form input {
+    margin: 3px;
+}
+
+form {
+    margin: 10px;
+    width: 400px;
+}

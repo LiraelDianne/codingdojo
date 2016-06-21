@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Success</title>
+</head>
+<body>
+    <p>Welcome, {{ request.session.name }}</p>
+    <h4>Users:</h4>
+    {% for user in users %}
+        <p>{{user.first_name}} {{user.last_name}} submitted at {{user.created_at}} email: {{ user.email }} password: {{user.password}}</p>
+    {% endfor %}
+</body>
+</html>
