@@ -1,0 +1,74 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome!</title>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/navbar-fixed-top.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Test App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'login' %}">Sign in</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Welcome!</h1>
+        <p>This is a practice app with a login and registration, message board, user list, and admin side</p>
+        <p><a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Start</a></p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Manage Users</h2>
+          <p>Add, remove, and edit users. </p>
+        </div>
+        <div class="col-md-4">
+          <h2>Leave messages</h2>
+          <p>Users can leave a message to another user on the user's profile.</p>
+       </div>
+        <div class="col-md-4">
+          <h2>Edit User Information</h2>
+          <p>Admins can edit another user's information (email address, name, etc.).</p>
+        </div>
+      </div>
+
+      <hr>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

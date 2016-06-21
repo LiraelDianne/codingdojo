@@ -4,6 +4,9 @@ from django.core.urlresolvers import reverse
 
 from .models import User
 
+def index(request):
+    return render(request, "login_registration/index.html")
+
 def registerForm(request):
     return render(request, "login_registration/register.html")
 

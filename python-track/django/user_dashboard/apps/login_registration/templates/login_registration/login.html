@@ -47,7 +47,7 @@
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'login-email' %}
-                                <span class='help-block'>{{message}}</span>
+                                <span class='help-block text-warning'>{{message}}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -58,7 +58,7 @@
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'login-password' %}
-                                <span class='help-block'>{{message}}</span>
+                                <span class='help-block text-warning'>{{message}}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}

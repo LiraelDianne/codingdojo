@@ -29,7 +29,7 @@
             <li class="active"><a href="#">Home</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Sign in</a></li>
+            <li><a href="{% url 'login' %}">Sign in</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -47,7 +47,7 @@
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'first_name' %}
-                                <span class='help-block'>{{message}}</span>
+                                <span class='help-block text-warning'>{{message}}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -58,7 +58,7 @@
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'last_name' %}
-                                <span class='help-block'>{{message}}</span>
+                                <span class='help-block text-warning'>{{message}}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -69,7 +69,7 @@
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'email' %}
-                                <span class='help-block'>{{message}}</span>
+                                <span class='help-block text-warning'>{{message}}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -80,7 +80,7 @@
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'password' %}
-                                <span class='help-block'>{{message}}</span>
+                                <span class='help-block text-warning'>{{message}}</span>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
