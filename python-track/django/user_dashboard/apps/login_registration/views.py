@@ -18,9 +18,11 @@ def registerUser(request):
         validate = User.userManager.register(**request.POST)
         if validate[1]:
             user = validate[0]
-            User.objects.create(first_name=user['first_name'], last_name=user['last_name'], email=user['email'], password=user['password'])
-            request.session['name'] = user['first_name']
-            return redirect(reverse('login-reg-success'))
+            User.objects.create(first_name=user['first_name'], last_name=user['last_name'], email=user['email'], password=user['password'], user_level=user['user_level'])
+            user = User.objects.get(email=user['email'])
+            request.session['id'] = user.id
+            request.session['user_level'] = user.user_level
+            return redirect(reverse('user-dash'))
         else:
             errors = validate[0]
             for error_type in errors:
@@ -32,16 +34,15 @@ def loginUser(request):
         validate = User.userManager.login(request.POST['email'], request.POST['password'])
         if validate[1]:
             user = validate[0]
-            request.session['name'] = user.first_name
-            return redirect(reverse('login-reg-success'))
+            request.session['id'] = user.id
+            request.session['user_level'] = user.user_level
+            return redirect(reverse('user-dash'))
         else:
             errors = validate[0]
             for error_type in errors:
                 messages.add_message(request, messages.INFO, errors[error_type], extra_tags=error_type)
             return redirect(reverse('login'))
 
-def success(request):
-    context = {
-        'users': User.objects.all()
-    }
-    return render(request, 'login_registration/display.html', context)
+def logoff(request):
+    request.session.flush()
+    return redirect(reverse('landing'))

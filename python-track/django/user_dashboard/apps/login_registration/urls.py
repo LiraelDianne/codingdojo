@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^register$', views.registerForm, name='register'),
     url(r'^login/process$', views.loginUser, name='login-user'),
     url(r'^register/process$', views.registerUser, name='register-user'),
-    url(r'^success$', views.success, name='login-reg-success')
+    url(r'^logoff$', views.logoff, name='logoff')
 ]

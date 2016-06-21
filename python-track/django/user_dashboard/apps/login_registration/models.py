@@ -26,6 +26,12 @@ class UserManager(models.Manager):
         email = kwargs['email'][0]
         password = kwargs['password'][0]
         confirm_password = kwargs['password_confirm'][0]
+        if not User.objects.all():
+            user_level = 9
+        elif 'user_level' in kwargs:
+            user_level = kwargs['user_level'][0]
+        else:
+            user_level = 0
 
         errors = {}
         if len(first_name) > 1:
@@ -52,11 +58,13 @@ class UserManager(models.Manager):
             return (errors, False)
 
         encrypted_pass = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
         user = {
             'first_name': first_name,
             'last_name': last_name,
             'email': email,
-            'password': encrypted_pass
+            'password': encrypted_pass,
+            'user_level': user_level
         }
         return (user, True)
 
@@ -65,6 +73,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     password = models.CharField(max_length=250)
+    user_level = models.SmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     userManager = UserManager()

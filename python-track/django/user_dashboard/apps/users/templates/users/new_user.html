@@ -1,0 +1,105 @@
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Registration</title>
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/navbar-fixed-top.css' %}" rel="stylesheet">
+
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Test App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'admin-dash' %}">Dashboard</a></li>
+            <li><a href="{% url 'home-profile' %}">Profile</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'logoff' %}">Log off</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div class="container-fluid">
+    <a class='btn btn-primary pull-right' href="{% url 'admin-dash' %}">Return to Dashboard</a>
+    <div class='row'>
+        <div class="col-md-6">
+            <h1>Add a new user</h1>
+            <form action="{% url 'create-user' %}" method='post'>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for='first_name_input'>First Name:</label>
+                    <input type="text" name="first_name" id='first_name_input' class='form-control'>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'first_name' %}
+                                <span class='help-block text-warning'>{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for='last_name_input'>Last Name:</label>
+                    <input type="text" name="last_name" id='last_name_input' class='form-control'>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'last_name' %}
+                                <span class='help-block text-warning'>{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for='email_input'>Email:</label>
+                    <input type="email" name="email" id='email_input' class='form-control'>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'email' %}
+                                <span class='help-block text-warning'>{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for='pw_input'>Password:</label>
+                    <input type="password" name="password" id='pw_input' class='form-control'>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.extra_tags == 'password' %}
+                                <span class='help-block text-warning'>{{message}}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for='pw_confirm_input'>Confirm Password:</label>
+                    <input type="password" name="password_confirm" id='pw_confirm_input' class='form-control'>
+                </div>
+                <div class="form-group">
+                    <label for='user_level'>User Level:</label>
+                    <select name='user_level' id='user_level' class='form-control'>
+                        <option value='9'>Admin</option>
+                        <option value="0">Normal</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
