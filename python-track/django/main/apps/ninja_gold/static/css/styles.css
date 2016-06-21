@@ -1,0 +1,17 @@
+#wrapper {
+    width: 970px;
+    margin-right: 0 auto;
+}
+
+.building {
+    display: inline-block;
+    width: 230px;
+    height: 120px;
+}
+
+.scroll {
+    margin: 0 10px;
+    width: 950px;
+    overflow: scroll;
+    height: 200px;
+}
