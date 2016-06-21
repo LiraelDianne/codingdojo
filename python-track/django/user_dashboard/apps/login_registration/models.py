@@ -9,7 +9,7 @@ EMAIL_REGEX = re.compile(r'^[\w\.\+-]+@[\w\.-]+\.[a-zA-Z]*$')
 class UserManager(models.Manager):
     def login(self, email, password):
         errors = {}
-        user = self.get(email__iexact=email)
+        user = User.objects.filter(email__iexact=email)
         if user:
             if bcrypt.hashpw(password.encode('utf-8'), user[0].password.encode('utf-8')) == user[0].password:
                 return (user[0], True)

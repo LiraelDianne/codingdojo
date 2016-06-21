@@ -4,8 +4,11 @@ from django.core.urlresolvers import reverse
 
 from .models import User
 
-def index(request):
-    return render(request, 'login_registration/index.html')
+def registerForm(request):
+    return render(request, "login_registration/register.html")
+
+def loginForm(request):
+    return render(request, "login_registration/login.html")
 
 def registerUser(request):
     if request.method == 'POST':
@@ -19,7 +22,7 @@ def registerUser(request):
             errors = validate[0]
             for error_type in errors:
                 messages.add_message(request, messages.INFO, errors[error_type], extra_tags=error_type)
-            return redirect(reverse('login-reg-index'))
+            return redirect(reverse('register'))
 
 def loginUser(request):
     if request.method == 'POST':
@@ -32,7 +35,7 @@ def loginUser(request):
             errors = validate[0]
             for error_type in errors:
                 messages.add_message(request, messages.INFO, errors[error_type], extra_tags=error_type)
-            return redirect(reverse('login-reg-index'))
+            return redirect(reverse('login'))
 
 def success(request):
     context = {
