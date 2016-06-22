@@ -3,26 +3,34 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 
 from ..login_registration.models import User
+from .models import Message, Comment
 
 def home_profile(request):
+    return redirect(reverse('user-profile', kwargs={'user_id':request.session['id']}))
+
+def user_profile(request, user_id):
     context = {
-        'user': User.objects.get(id=request.session['id'])
+        'user': User.objects.get(id=user_id),
+        'messages': Message.objects.filter(user_profile=user_id),
+        'comments': Comment.objects.filter(message__user_profile=user_id)
     }
     return render(request, 'users/profile.html', context)
 
-def user_profile(request, user_id):
-    if user_id == request.session['id']:
-        return redirect(reverse('home-profile'))
-    context = {
-            'user': User.objects.get(id=user_id)
-        }
-    return render(request, 'users/profile.html', context)
+def post_message(request, profile_id):
+    if request.method == "POST":
+        author = User.objects.get(id=request.POST['poster_id'])
+        user_profile = User.objects.get(id=profile_id)
+        content = request.POST['content']
+        Message.objects.create(author=author, content=content, user_profile=user_profile)
+    return redirect(reverse('user-profile', kwargs={'user_id':profile_id}))
 
-def post_message(request):
-    pass
-
-def comment(request):
-    pass
+def comment(request, message_id, profile_id):
+    if request.method == "POST":
+        author = User.objects.get(id=request.POST['poster_id'])
+        message = Message.objects.get(id=message_id)
+        content = request.POST['content']
+        Comment.objects.create(author=author, content=content, message=message)
+    return redirect(reverse('user-profile', kwargs={'user_id':profile_id}))
 
 def new_user(request):
     if 'id' not in request.session:
@@ -68,18 +76,19 @@ def edit_user(request, user_id):
         }
         return render(request, 'users/edit.html', context)
     else:
-        return redirect(reverse('user-profile'))
+        return redirect(reverse('user-profile', kwargs={'user_id':user_id}))
 
 def update_info(request, id):
-    # changing methods in controller and model to accept an id parameter separately
-    # update templates to remove hidden inputs
     if request.method == "PUT":
         valid = User.userManager.edit(id, **request.PUT)
         if not valid[0]:
             errors = valid[0]
             for error_type in errors:
                 messages.add_message(request, messages.INFO, errors[error_type], extra_tags=error_type)
-            return redirect(reverse('edit-profile'))
+            if request.session['id'] == id:
+                return redirect(reverse('edit-profile'))
+            else:
+                return redirect(reverse('edit-user', kwargs={'user_id':id}))
 
     return redirect(reverse('user-dash'))
 
@@ -90,7 +99,10 @@ def update_pw(request, id):
             errors = valid[0]
             for error_type in errors:
                 messages.add_message(request, messages.INFO, errors[error_type], extra_tags=error_type)
-            return redirect(reverse('edit-profile'))
+            if request.session['id'] == id:
+                return redirect(reverse('edit-profile'))
+            else:
+                return redirect(reverse('edit-user', kwargs={'user_id':id}))
 
 def update_desc(request, id):
     if request.method == 'PUT':
@@ -98,6 +110,6 @@ def update_desc(request, id):
         return redirect(reverse('user-dash'))
     return redirect(reverse('edit-profile'))
 
-def remove_user(request, id):
-    User.objects.get(id=id).delete()
+def remove_user(request, user_id):
+    User.objects.get(id=user_id).delete()
     return redirect(reverse('admin-dash'))

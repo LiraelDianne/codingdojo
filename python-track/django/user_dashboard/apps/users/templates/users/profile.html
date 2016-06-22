@@ -20,7 +20,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Test App</a>
+          <a class="navbar-brand" href="{% url 'landing' %}">User Dashboard</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -48,12 +48,70 @@
       <p>{{ user.email }}</p>
       <p>{{ user.description }}</p>
     </div>
-  </div>
   {% if user.id == request.session.id %}
     <a class='btn btn-primary' href="{% url 'edit-profile' %}">Edit Info</a>
+  </div>
+  <div class="row">
+  {% else %}
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form action="{% url 'message-user' user.id %}" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name='poster_id' value="{{ request.session.id }}">
+        <div class="form-group">
+          <label for='leave-message'>Leave a message for {{ user.first_name }}:</label>
+          <textarea type="text" name="content" id='leave-message' class='form-control'></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Post</button>
+      </form>
+    </div>
   {% endif %}
-
-
+  {% if messages %}
+    {% for message in messages %}
+      <div class="col-mid-12">
+        <p class="pull-right">{{ message.created_at }}</p>
+        <p class="author"><a href="{% url 'user-profile' message.author.id %}">{{ message.author.first_name }} {{ message.author.last_name }}</a> wrote</p>
+        <div class='message well'>
+          {% if message.author.id == request.session.id or request.session.user_level == 9 %}
+            <span class="glyphicon glyphicon-remove-circle pull-right" aria-hidden="true"></span>
+            <span class="sr-only">Delete Message</span>
+          {% endif %}
+          <p>{{ message.content }}</p>
+        </div>
+      </div>
+      {% if comments %}
+        {% for comment in comments %}
+          {% if comment.message.id == message.id %}
+            <div class="col-md-10 col-md-offset-2">
+              <p class="pull-right">{{ comment.created_at }}</p>
+              <p class="author"><a href="{% url 'user-profile' comment.author.id %}">{{ comment.author.first_name }} {{ comment.author.last_name }}</a> wrote</p>
+              <div class='comment well'>
+                {% if comment.author.id == request.session.id or message.author.id == request.session.id or request.session.user_level == 9 %}
+                  <span class="glyphicon glyphicon-remove-circle pull-right" aria-hidden="true"></span>
+                  <span class="sr-only">Delete Comment</span>
+                {% endif %}
+                <p>{{ comment.content }}</p>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      <div class="col-md-10 col-md-offset-2">
+        <form action="{% url 'comment' message.id user.id %}" method='POST'>
+          {% csrf_token %}
+          <input type="hidden" name='poster_id' value="{{ request.session.id }}">
+          <div class="form-group">
+            <label for='comment-message-{{ message.id }}'>Leave a comment</label>
+            <textarea type="text" name="content" id='comment-message-{{ message.id }}' class='form-control'></textarea>
+          </div>
+          <button type="submit" class="btn btn-success">Post</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+  </div>
 </div>
 </body>
 </html>

@@ -4,8 +4,8 @@ from . import views
 urlpatterns = [
     url(r'^show/$', views.home_profile, name='home-profile'),
     url(r'^show/(?P<user_id>\d+)/$', views.user_profile, name='user-profile'),
-    url(r'^message/()/$', views.post_message, name='message-user'),
-    url(r'^comment/(?P<message_id>\d+)/(?P<user_id>\d+)/$', views.comment, name='comment'),
+    url(r'^message/(?P<profile_id>\d+)/$', views.post_message, name='message-user'),
+    url(r'^comment/(?P<message_id>\d+)/(?P<profile_id>\d+)/$', views.comment, name='comment'),
     url(r'^new/$', views.new_user, name='new-user'),
     url(r'^create/$', views.create_user, name='create-user'),
     url(r'^edit/$', views.edit_profile, name='edit-profile'),
