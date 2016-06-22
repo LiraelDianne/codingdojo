@@ -68,6 +68,55 @@ class UserManager(models.Manager):
         }
         return (user, True)
 
+
+    def edit(self, id, **kwargs):
+        first_name = kwargs['first_name'][0]
+        last_name = kwargs['last_name'][0]
+        email = kwargs['email'][0]
+        user_level = kwargs['user_level'][0]
+
+        errors = {}
+        if len(first_name) > 1:
+            if not NAME_REGEX.match(first_name):
+                errors['first_name'] = "First name must be letters only"
+        else:
+            errors['first_name'] = "First name must be at least 2 characters"
+        if len(last_name) > 1:
+            if not NAME_REGEX.match(last_name):
+                errors['last_name'] = "Last name must be letters only"
+        else:
+            errors['last_name'] = "Last name must be at least 2 characters"
+        if len(email) > 0:
+            if not EMAIL_REGEX.match(email):
+                errors['email'] = "Email is not valid"
+        else:
+            errors['email'] = "Email must not be empty"
+        if errors:
+            return (False, errors)
+
+        user = User.objects.get(id=id)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.user_level = user_level
+        user.save()
+        return [True]
+
+    def password(self, id, password, confirm_password):
+        if password == confirm_password:
+            if len(password) < 8:
+                errors['password'] = "Password must be at least 8 characters"
+        else:
+            errors['password'] = "Password confirmation does not match"
+        if errors:
+            return (False, errors)
+
+        encrypted_pass = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        user = User.objects.get(id=id)
+        user.password = encrypted_pass
+        return [True]
+
 class User(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -76,5 +125,6 @@ class User(models.Model):
     user_level = models.SmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    description = models.TextField(max_length=1000, default="")
     userManager = UserManager()
     objects = models.Manager()

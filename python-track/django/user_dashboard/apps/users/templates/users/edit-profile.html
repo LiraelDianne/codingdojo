@@ -24,7 +24,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{% url 'admin-dash' %}">Dashboard</a></li>
+            <li><a href="{% url 'user-dash' %}">Dashboard</a></li>
             <li><a href="{% url 'home-profile' %}">Profile</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -35,7 +35,7 @@
     </nav>
 
 <div class="container-fluid">
-    <h1>Edit user #{{ user.id }}</h1>
+    <h1>Edit Profile</h1>
     <a class='btn btn-primary pull-right' href="{% url 'user-dash' %}">Return to Dashboard</a>
     <div class='row'>
         <div class="col-md-6">
@@ -44,7 +44,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for='first_name_input'>First Name:</label>
-                    <input type="text" name="first_name" id='first_name_input' class='form-control' value="{{ user.first_name }}">
+                    <input type="text" name="first_name" id='first_name_input' class='form-control' value='{{ user.first_name }}'>
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'first_name' %}
@@ -55,7 +55,7 @@
                 </div>
                 <div class="form-group">
                     <label for='last_name_input'>Last Name:</label>
-                    <input type="text" name="last_name" id='last_name_input' class='form-control' value="{{ user.last_name }}">
+                    <input type="text" name="last_name" id='last_name_input' class='form-control' value='{{ user.last_name }}'>
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'last_name' %}
@@ -66,7 +66,7 @@
                 </div>
                 <div class="form-group">
                     <label for='email_input'>Email:</label>
-                    <input type="email" name="email" id='email_input' class='form-control' value="{{ user.email }}">
+                    <input type="email" name="email" id='email_input' class='form-control' value='{{ user.email }}'>
                     {% if messages %}
                         {% for message in messages %}
                             {% if message.extra_tags == 'email' %}
@@ -75,23 +75,10 @@
                         {% endfor %}
                     {% endif %}
                 </div>
-                <div class="form-group">
-                    <label for='user_level'>User Level:</label>
-                    <select name='user_level' id='user_level' class='form-control'>
-                        {% if user.user_level == 0%}
-                        <option value='9'>Admin</option>
-                        <option selected value="0">Normal</option>
-                        {% else %}
-                        <option selected value='9'>Admin</option>
-                        <option value="0">Normal</option>
-                        {% endif %}
-                    </select>
-                </div>
-                <button type="submit" class='btn btn-success'>Save</button>
             </form>
         </div>
         <div class='col-md-6'>
-            <h3>Edit Password</h3>
+            <h3>Change Password</h3>
             <form action="{% url 'update-pw' user.id %}">
                 <div class="form-group">
                     <label for='pw_input'>Password:</label>
@@ -109,6 +96,16 @@
                     <input type="password" name="password_confirm" id='pw_confirm_input' class='form-control'>
                 </div>
                 <button type="submit" class="btn btn-success">Update Password</button>
+            </form>
+        </div>
+        <div class='col-md-12'>
+            <h3>Edit Description</h3>
+            <form action="{% url 'update-desc' user.id %}">
+                <div class="form-group">
+                    <label for='description'></label>
+                    <textarea name="description" id='description' class='form-control' value='{{ user.description }}'></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Save</button>
             </form>
         </div>
     </div>
