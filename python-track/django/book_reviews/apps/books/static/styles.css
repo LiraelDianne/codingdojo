@@ -1,0 +1,29 @@
+#wrapper {
+    width: 900px;
+    margin: 0 auto;
+}
+
+.inline {
+    display: inline-block;
+    vertical-align: top;
+    width: 400px;
+}
+
+form {
+    width: 400px;
+}
+
+form input {
+    display: block;
+}
+
+.nav {
+    position: absolute;
+    right: 0px;
+    width: 400px;
+    height: 40px;
+}
+
+.nav p {
+    display: inline-block;
+}

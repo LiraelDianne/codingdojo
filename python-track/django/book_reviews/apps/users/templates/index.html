@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+<div id='wrapper'>
+    <h1>Welcome!</h1>
+    <div class="inline">
+        <h3>Register</h3>
+        <form action="{% url 'register' %}" method='post'>
+            {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.extra_tags == 'name' %}
+                        <p>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <label>Name:</label>
+            <input type="text" name="name">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.extra_tags == 'alias' %}
+                        <p>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <label>Alias:</label>
+            <input type="text" name="alias">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.extra_tags == 'email' %}
+                        <p>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <label>Email:</label>
+            <input type="text" name='email'>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.extra_tags == 'password' %}
+                        <p>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <label>Password:</label>
+            <input type="password" name="password">
+            <label>Confirm password:</label>
+            <input type="password" name="confirm_pw">
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <div class="inline">
+        <h3>Login</h3>
+        <div class="inline">
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'login-email' %}
+                            <p>{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <label>Email:</label>
+                <input type="text" name="email">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'login-password' %}
+                            <p>{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <label>Password:</label>
+                <input type="password" name="password">
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

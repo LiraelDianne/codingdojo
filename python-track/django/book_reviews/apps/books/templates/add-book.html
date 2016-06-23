@@ -1,0 +1,41 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Book and Review</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class='nav'>
+       <p><a href="{% url 'books' %}">Home</a></p>
+       <p><a href="{% url 'logout' %}">Logout</a></p>
+    </div>
+    <div class="wrapper">
+        <form action="{% url 'create-book' %}" method="POST">
+            {% csrf_token %}
+            <label>Book Title:</label>
+            <input type="text" name="title">
+            <label>Author:</label>
+            <p>Choose from the list: <select name='author-list'>
+                {% if authors %}
+                    {% for author in authors %}
+                        <option value='{{ author.id }}'>{{ author.name }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select></p>
+            <p>Or add a new author:<input name="new-author"></p>
+            <label>Review:</label>
+            <input type="text" name='content'>
+            <label>Rating:</label>
+            <p><select name='rating'>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select> stars.</p>
+            <input type="submit" value="Add Book and Review">
+        </form>
+    </div>
+</body>
+</html>
